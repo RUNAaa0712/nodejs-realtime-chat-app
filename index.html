@@ -55,6 +55,10 @@
         #messages > li:nth-child(odd) {
           background: #efefef;
         }
+        .time {
+          background-color: #181818dc;
+          color: white;
+        }
     </style>
 </head>
 <body>
@@ -81,9 +85,23 @@
 
         socket.on("chat message", function(msg){
             let item = document.createElement("li");
-            item.textContent = msg;
+            let label = document.createElement("label");
+            label.className = 'time';
+            label.innerHTML = gettime();
+            item.append(label);
+            item.innerHTML += msg;
             messages.appendChild(item);
         })
+        function gettime(){
+          var nowTime = new Date();
+          let nowHour = nowTime.getHours().toString();
+          let nowMin  = nowTime.getMinutes().toString();
+          if(nowMin.length==1) nowMin = '0'+nowMin;
+          let nowSec  = nowTime.getSeconds().toString();
+          if(nowSec.length==1) nowSec = '0'+nowSec;
+          let msg = nowHour + ":" + nowMin + ":" + nowSec;
+          return msg;
+        }
     </script>
 </body>
 </html>
